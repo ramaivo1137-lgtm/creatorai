@@ -1,101 +1,261 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101426">
-<title>CreatorAI — Content Studio</title>
+<title>CreatorAI - Content Studio</title>
 <style>
-:root{--bg:#0b1020;--panel:#151c31;--panel2:#1b2540;--text:#f5f7ff;--muted:#aab4ce;--accent:#8b7cff;--accent2:#45d6c5;--line:#2a3552}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 90% 0%,#29245b 0,transparent 35%),var(--bg);color:var(--text);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-main{max-width:760px;margin:auto;padding:env(safe-area-inset-top) 18px 36px}
-header{display:flex;justify-content:space-between;align-items:center;padding:22px 0 18px}
-.brand{font-weight:800;font-size:20px;letter-spacing:-.5px}.brand span{color:var(--accent2)}
-.pill{border:1px solid #3b4565;background:#202945;color:#d8ddf2;border-radius:99px;padding:7px 11px;font-size:12px}
-.hero{padding:24px 20px;border:1px solid #3c3b70;border-radius:24px;background:linear-gradient(130deg,#25224f,#182a42 75%);box-shadow:0 18px 55px #0005}
-.eyebrow{color:#b9b2ff;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase}
-h1{font-size:30px;line-height:1.08;margin:10px 0}.hero p{color:#c5cbe0;line-height:1.5;margin:10px 0 0}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0}
-.stat{background:#ffffff0b;border:1px solid #ffffff16;border-radius:15px;padding:12px}.stat b{display:block;font-size:19px}.stat small{color:var(--muted);font-size:11px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px;margin:14px 0}
-h2{font-size:17px;margin:0 0 14px}.label{display:block;color:#cbd3e8;font-size:13px;margin:13px 0 7px}
-select,input,textarea{width:100%;border:1px solid #394563;background:#0f172b;color:var(--text);border-radius:12px;padding:13px;font:inherit;outline:none}
-textarea{min-height:92px;resize:vertical}
-button{border:0;border-radius:13px;padding:13px 16px;font:700 14px inherit;cursor:pointer}
-.primary{width:100%;color:#0c1120;background:linear-gradient(100deg,#a99eff,#55e0cf);margin-top:14px;font-weight:800}
+:root{--bg:#0b1020;--panel:#151c31;--text:#f5f7ff;--muted:#aab4ce;--line:#2a3552}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 90% 0%,#29245b,transparent 35%),var(--bg);color:var(--text);font:15px -apple-system,BlinkMacSystemFont,sans-serif}
+main{max-width:760px;margin:auto;padding:18px}
+header{display:flex;justify-content:space-between;padding:15px 0 20px}
+.brand{font-size:23px;font-weight:800}.brand span{color:#45d6c5}
+.pill{background:#202945;border:1px solid #3b4565;border-radius:30px;padding:7px 11px;font-size:11px}
+.hero{padding:25px 20px;border:1px solid #3c3b70;border-radius:23px;background:linear-gradient(130deg,#25224f,#182a42)}
+.eyebrow{color:#b9b2ff;font-size:12px;font-weight:bold;letter-spacing:1px}
+h1{font-size:32px;line-height:1.1}
+.hero p,.note{color:var(--muted);line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:20px}
+.stat{background:#ffffff0b;border:1px solid #ffffff16;border-radius:13px;padding:12px}
+.stat b{display:block;font-size:19px}.stat small{color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:19px;padding:18px;margin:15px 0}
+h2{font-size:17px;margin:0 0 15px}
+.label{display:block;color:#cbd3e8;font-size:13px;margin:13px 0 7px}
+select,input,textarea{width:100%;border:1px solid #394563;background:#0f172b;color:var(--text);border-radius:12px;padding:13px;font:inherit}
+textarea{min-height:85px}
+.row{display:flex;gap:10px}.row>*{flex:1;min-width:0}
+button{border:0;border-radius:12px;padding:12px;font:inherit;font-weight:700;cursor:pointer}
+.primary{width:100%;margin-top:16px;background:linear-gradient(100deg,#a99eff,#55e0cf);color:#0c1120}
 .secondary{background:#283451;color:#eef1ff}
-.row{display:flex;gap:9px}.row>*{flex:1}
-.output{white-space:pre-wrap;line-height:1.55;color:#e6eaff;background:#0d1427;border:1px solid #303c5c;border-radius:13px;padding:14px;min-height:90px}
-.actions{display:flex;gap:8px;margin-top:10px}.actions button{flex:1}
-.note{font-size:12px;color:var(--muted);line-height:1.5}
-footer{text-align:center;color:#7f8aa7;font-size:11px;padding:20px 0}
-.hidden{display:none}
-@media(min-width:600px){main{padding-left:26px;padding-right:26px}.hero{padding:30px}.hero h1{font-size:38px}}
+.output{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6;background:#0d1427;border:1px solid #303c5c;border-radius:13px;padding:14px;min-height:100px}
+.actions{display:flex;gap:9px;margin-top:10px}.actions button{flex:1}
+.history-item{padding:13px 0;border-bottom:1px solid var(--line)}
+.history-info{color:var(--muted);font-size:12px;margin:6px 0 10px}
+.history-actions{display:flex;gap:8px}.history-actions button{flex:1}
+.note{font-size:12px}
+footer{text-align:center;color:#7f8aa7;font-size:11px;padding:20px}
 </style>
 </head>
-<body><main>
-<header><div class="brand">Creator<span>AI</span></div><div class="pill">PROTOTIPE v0.1</div></header>
+<body>
+<main>
+<header>
+<div class="brand">Creator<span>AI</span></div>
+<div class="pill">VERSION 0.2</div>
+</header>
+
 <section class="hero">
- <div class="eyebrow">Your personal content studio</div>
- <h1>Ide bagus.<br>Konten jadi.</h1>
- <p>Buat konsep video, skrip, caption, dan SEO media sosial dari satu tempat.</p>
- <div class="stats"><div class="stat"><b>4</b><small>Platform</small></div><div class="stat"><b>6</b><small>Tools</small></div><div class="stat"><b>Free</b><small>Prototype</small></div></div>
+<div class="eyebrow">YOUR PERSONAL CONTENT STUDIO</div>
+<h1>Ide bagus.<br>Konten jadi.</h1>
+<p>Buat ide video, naskah, caption, hashtag dan SEO dari satu tempat.</p>
+<div class="stats">
+<div class="stat"><b>4</b><small>Platform</small></div>
+<div class="stat"><b>6</b><small>Tools</small></div>
+<div class="stat"><b>Free</b><small>Prototype</small></div>
+</div>
 </section>
+
 <section class="card">
- <h2>✨ Buat konten baru</h2>
- <label class="label" for="tool">Pilih alat</label>
- <select id="tool">
-  <option value="idea">Ide konten</option><option value="script">Naskah video</option><option value="caption">Caption</option><option value="seo">YouTube SEO</option><option value="hashtags">Hashtag</option><option value="voice">Voice-over</option>
- </select>
- <div class="row">
-  <div><label class="label" for="platform">Platform</label><select id="platform"><option>YouTube Shorts</option><option>TikTok</option><option>Instagram Reels</option><option>Facebook Reels</option></select></div>
-  <div><label class="label" for="language">Bahasa</label><select id="language"><option>Indonesia</option><option>English</option></select></div>
- </div>
- <label class="label" for="topic">Topik atau kata kunci</label>
- <input id="topic" placeholder="Contoh: fakta psikologi tentang kebiasaan"/>
- <label class="label" for="details">Detail tambahan (opsional)</label>
- <textarea id="details" placeholder="Contoh: target penonton Amerika, durasi 30 detik, gaya storytelling..."></textarea>
- <button class="primary" id="generate">Buat konten →</button>
- <p class="note">Mode demo: hasil dibuat dari template lokal. AI API belum dihubungkan, jadi belum ada biaya API.</p>
+<h2>✨ Buat konten baru</h2>
+<label class="label">Pilih alat</label>
+<select id="tool">
+<option value="idea">Ide konten</option>
+<option value="script">Naskah video</option>
+<option value="caption">Caption</option>
+<option value="seo">YouTube SEO</option>
+<option value="hashtags">Hashtag</option>
+<option value="voice">Voice-over</option>
+</select>
+<div class="row">
+<div>
+<label class="label">Platform</label>
+<select id="platform">
+<option>YouTube Shorts</option>
+<option>TikTok</option>
+<option>Instagram Reels</option>
+<option>Facebook Reels</option>
+</select>
+</div>
+<div>
+<label class="label">Bahasa</label>
+<select id="language">
+<option>Indonesia</option>
+<option>English</option>
+</select>
+</div>
+</div>
+<label class="label">Topik atau kata kunci</label>
+<input id="topic" placeholder="Contoh: Psychology and Human Behavior">
+<label class="label">Detail tambahan (opsional)</label>
+<textarea id="details" placeholder="Target Amerika, durasi 30 detik..."></textarea>
+<button class="primary" id="generate">Buat konten →</button>
+<p class="note">Mode demo: hasil memakai template lokal. AI sungguhan belum terhubung.</p>
 </section>
+
 <section class="card">
- <h2>Hasil konten</h2>
- <div id="result" class="output">Hasil kamu akan muncul di sini setelah menekan “Buat konten”.</div>
- <div class="actions"><button class="secondary" id="copy">Salin hasil</button><button class="secondary" id="clear">Hapus</button></div>
+<h2>📝 Hasil konten</h2>
+<div id="result" class="output">Hasil konten akan muncul di sini.</div>
+<div class="actions">
+<button class="secondary" id="copy">Salin hasil</button>
+<button class="secondary" id="clear">Hapus hasil</button>
+</div>
 </section>
+
 <section class="card">
- <h2>🚀 Rencana CreatorAI</h2>
- <p class="note">Tahap 1 — prototipe antarmuka. Tahap 2 — sambungkan AI melalui backend aman. Tahap 3 — akun pengguna dan riwayat cloud. Tahap 4 — langganan/in-app purchase, privasi, pengujian, lalu persiapan App Store.</p>
- <p class="note"><b>Monetisasi belum aktif.</b> Jangan masukkan API key rahasia ke aplikasi atau file HTML. Integrasi produksi perlu backend agar kunci API terlindungi.</p>
+<h2>🕘 Riwayat konten</h2>
+<div id="history"><p class="note">Belum ada riwayat konten.</p></div>
+<button class="secondary" id="clearHistory" style="width:100%;margin-top:12px">Hapus semua riwayat</button>
 </section>
-<footer>CreatorAI • Prototype for product validation</footer>
+
+<section class="card">
+<h2>🚀 Rencana CreatorAI</h2>
+<p class="note">Tahap 1: Prototipe. Tahap 2: Integrasi AI melalui backend aman. Tahap 3: Akun dan penyimpanan cloud. Tahap 4: Pengujian dan persiapan App Store.</p>
+<p class="note">Monetisasi belum aktif. Jangan memasukkan API key rahasia ke file HTML.</p>
+</section>
+<footer>CreatorAI - Content Studio v0.2</footer>
 </main>
+
 <script>
 const $=id=>document.getElementById(id);
-function makeText(){
- const topic=$('topic').value.trim()||'topik menarik hari ini', platform=$('platform').value, lang=$('language').value, detail=$('details').value.trim(), tool=$('tool').value;
- const en=lang==='English';
- const names={idea:en?'CONTENT IDEAS':'IDE KONTEN',script:en?'VIDEO SCRIPT':'NASKAH VIDEO',caption:'CAPTION',seo:'YOUTUBE SEO',hashtags:'HASHTAG',voice:en?'VOICE-OVER':'VOICE OVER'};
- let out=names[tool]+' — '+platform+'\nTopik: '+topic+'\n\n';
- if(tool==='idea') out+=(en?'1. The surprising truth about ':'1. Fakta mengejutkan tentang ')+topic+'\n'+(en?'2. 3 things most people misunderstand about ':'2. 3 hal yang sering disalahpahami tentang ')+topic+'\n'+(en?'3. What happens when you try ':'3. Apa yang terjadi ketika kamu mencoba ')+topic+'\n\n'+(en?'Hook: “You probably never noticed this…”':'Hook: “Kamu mungkin belum pernah menyadari hal ini…”');
- if(tool==='script') out+=(en?'HOOK (0–3s): Stop scrolling. Here is something surprising about ':'HOOK (0–3 detik): Jangan scroll dulu. Ada hal mengejutkan tentang ')+topic+'.\n\n'+(en?'EXPLANATION (3–20s): ':'PENJELASAN (3–20 detik): ') +(en?'Let’s break it down with one clear example. ':'Mari kita pahami melalui satu contoh sederhana. ')+topic+'.\n\n'+(en?'ENDING (20–30s): ':'PENUTUP (20–30 detik): ')+(en?'Now you know something new. Follow for more.':'Sekarang kamu tahu hal baru. Ikuti untuk konten berikutnya.');
- if(tool==='caption') out+=(en?'Discover something new about ':'Temukan hal menarik tentang ')+topic+'. '+(en?'Save this video and share it with someone curious.':'Simpan video ini dan bagikan kepada teman yang penasaran.')+'\n\n'+detail;
- if(tool==='seo') out+='TITLE: '+topic+' | '+(en?'Facts You Should Know':'Fakta yang Perlu Kamu Tahu')+'\n\nDESCRIPTION: '+(en?'Learn more about ':'Pelajari lebih lanjut tentang ')+topic+'. '+(en?'Subscribe for more useful content.':'Subscribe untuk konten menarik lainnya.')+'\n\nKEYWORDS: '+topic+', '+platform+', educational content, facts';
- if(tool==='hashtags') out+='#'+topic.replace(/[^a-zA-Z0-9]/g,'')+' #ContentCreator #'+platform.replace(/[^a-zA-Z0-9]/g,'')+' #CreatorAI #LearnSomethingNew';
- if(tool==='voice') out+=(en?'Have you ever wondered about ':'Pernahkah kamu bertanya-tanya tentang ')+topic+'? '+(en?'There is more to this topic than you might think. Let’s explore the idea, understand why it matters, and discover one useful takeaway.':'Topik ini ternyata lebih menarik dari yang kamu bayangkan. Mari kita pahami, kenapa hal ini penting, dan satu hal berguna yang bisa kamu pelajari.');
- if(detail) out+='\n\nCatatan kreator: '+detail;
- return out;
+const KEY='creatorai_history_v02';
+
+function getHistory(){
+try{return JSON.parse(localStorage.getItem(KEY))||[]}
+catch(e){return []}
 }
-$('generate').addEventListener('click',()=>{$('result').textContent=makeText()});
-$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('result').textContent);$('copy').textContent='Tersalin ✓';setTimeout(()=>$('copy').textContent='Salin hasil',1600)}catch(e){$('copy').textContent='Pilih dan salin teks'}});
-$('clear').addEventListener('click',()=>{$('result').textContent='Hasil kamu akan muncul di sini setelah menekan “Buat konten”.'});
-</script></body></html>
-<footer>CreatorAI • Prototype for product validation <section class="card">
-  <h2>🕘 Riwayat Konten</h2>
-  <div id="history">
-    <p class="note">Belum ada riwayat.</p>
-  </div>
-  <button class="secondary" id="clearHistory">
-    Hapus Semua Riwayat
-  </button>
-</section></footer>
+
+function makeText(){
+const topic=$('topic').value.trim();
+const detail=$('details').value.trim();
+const tool=$('tool').value;
+const platform=$('platform').value;
+const en=$('language').value==='English';
+
+if(!topic){alert('Masukkan topik terlebih dahulu.');return null}
+
+const names={idea:'CONTENT IDEAS',script:'VIDEO SCRIPT',caption:'CAPTION',seo:'YOUTUBE SEO',hashtags:'HASHTAGS',voice:'VOICE-OVER'};
+let out=names[tool]+' - '+platform+'\nTopic: '+topic+'\n\n';
+
+if(tool==='idea'){
+out+=(en?'1. The surprising truth about ':'1. Fakta mengejutkan tentang ')+topic;
+out+='\n2. '+(en?'Three things people misunderstand about ':'Tiga hal yang sering disalahpahami tentang ')+topic;
+out+='\n3. '+(en?'What happens when you explore ':'Apa yang terjadi ketika kamu mempelajari ')+topic;
+out+='\n\nHOOK: '+(en?'You probably never noticed this...':'Kamu mungkin belum menyadari hal ini...');
+}
+if(tool==='script'){
+out+=(en?'HOOK (0-3s): Stop scrolling. Here is something surprising about ':'HOOK (0-3 detik): Jangan scroll dulu. Ada hal mengejutkan tentang ')+topic;
+out+='\n\n'+(en?'EXPLANATION (3-20s): Let’s understand this with a clear example. ':'PENJELASAN (3-20 detik): Mari kita pahami melalui contoh sederhana. ')+topic;
+out+='\n\n'+(en?'ENDING (20-30s): Now you know something new. Follow for more.':'PENUTUP (20-30 detik): Sekarang kamu tahu hal baru. Ikuti untuk konten berikutnya.');
+}
+if(tool==='caption'){
+out+=(en?'Discover something new about ':'Temukan hal menarik tentang ')+topic+'. '+(en?'Save and share this video!':'Simpan dan bagikan video ini!');
+}
+if(tool==='seo'){
+out+='TITLE: '+topic+' | '+(en?'Facts You Should Know':'Fakta yang Perlu Kamu Tahu');
+out+='\n\nDESCRIPTION: '+(en?'Learn more about ':'Pelajari lebih lanjut tentang ')+topic;
+out+='\n\nKEYWORDS: '+topic+', '+platform+', educational content';
+}
+if(tool==='hashtags'){
+out+='#'+topic.replace(/[^a-zA-Z0-9]/g,'')+' #ContentCreator #CreatorAI #LearnSomethingNew #ShortVideo';
+}
+if(tool==='voice'){
+out+=(en?'Have you ever wondered about ':'Pernahkah kamu bertanya-tanya tentang ')+topic+'? ';
+out+=(en?'Let’s explore this topic and discover why it matters.':'Mari kita pelajari topik ini dan temukan mengapa hal tersebut penting.');
+}
+if(detail)out+='\n\nAdditional notes: '+detail;
+return out;
+}
+
+function renderHistory(){
+const box=$('history');
+const items=getHistory();
+box.replaceChildren();
+if(!items.length){
+const p=document.createElement('p');
+p.className='note';
+p.textContent='Belum ada riwayat konten.';
+box.appendChild(p);
+return;
+}
+items.forEach(item=>{
+const card=document.createElement('div');
+card.className='history-item';
+const title=document.createElement('b');
+title.textContent=item.topic;
+const info=document.createElement('div');
+info.className='history-info';
+info.textContent=item.tool+' • '+item.platform+' • '+item.date;
+const actions=document.createElement('div');
+actions.className='history-actions';
+const open=document.createElement('button');
+open.className='secondary';
+open.textContent='Buka';
+open.onclick=()=>{
+$('result').textContent=item.text;
+$('result').scrollIntoView({behavior:'smooth'});
+};
+const remove=document.createElement('button');
+remove.className='secondary';
+remove.textContent='Hapus';
+remove.onclick=()=>{
+saveHistory(getHistory().filter(x=>x.id!==item.id));
+renderHistory();
+};
+actions.append(open,remove);
+card.append(title,info,actions);
+box.appendChild(card);
+});
+}
+
+function saveHistory(items){
+try{
+localStorage.setItem(KEY,JSON.stringify(items.slice(0,20)));
+return true;
+}catch(e){
+alert('Penyimpanan browser tidak tersedia.');
+return false;
+}
+}
+
+$('generate').onclick=()=>{
+const result=makeText();
+if(!result)return;
+$('result').textContent=result;
+const item={
+id:Date.now().toString(),
+topic:$('topic').value.trim(),
+tool:$('tool').value,
+platform:$('platform').value,
+date:new Date().toLocaleString('id-ID'),
+text:result
+};
+if(saveHistory([item,...getHistory()]))renderHistory();
+};
+
+$('copy').onclick=async()=>{
+try{
+await navigator.clipboard.writeText($('result').textContent);
+$('copy').textContent='Tersalin ✓';
+}catch(e){
+$('copy').textContent='Salin manual';
+}
+setTimeout(()=>$('copy').textContent='Salin hasil',1500);
+};
+
+$('clear').onclick=()=>{
+$('result').textContent='Hasil konten akan muncul di sini.';
+};
+
+$('clearHistory').onclick=()=>{
+if(confirm('Hapus semua riwayat?')){
+saveHistory([]);
+renderHistory();
+}
+};
+
+renderHistory();
+</script>
+</body>
+</html>
