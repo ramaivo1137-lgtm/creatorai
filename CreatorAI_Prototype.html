@@ -90,3 +90,12 @@ $('generate').addEventListener('click',()=>{$('result').textContent=makeText()})
 $('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('result').textContent);$('copy').textContent='Tersalin ✓';setTimeout(()=>$('copy').textContent='Salin hasil',1600)}catch(e){$('copy').textContent='Pilih dan salin teks'}});
 $('clear').addEventListener('click',()=>{$('result').textContent='Hasil kamu akan muncul di sini setelah menekan “Buat konten”.'});
 </script></body></html>
+<footer>CreatorAI • Prototype for product validation <section class="card">
+  <h2>🕘 Riwayat Konten</h2>
+  <div id="history">
+    <p class="note">Belum ada riwayat.</p>
+  </div>
+  <button class="secondary" id="clearHistory">
+    Hapus Semua Riwayat
+  </button>
+</section></footer>
